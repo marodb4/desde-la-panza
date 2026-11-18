@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="110" fill="#9E4F32"/>
+  <!-- Perfil de panza, una sola línea -->
+  <path d="M190 120
+           C 150 170, 140 230, 160 290
+           C 175 335, 200 365, 210 400
+           C 215 418, 225 430, 245 430
+           C 300 430, 345 395, 360 340
+           C 375 285, 365 220, 325 175
+           C 295 141, 230 100, 190 120 Z"
+        fill="none" stroke="#FAF6F0" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Huellita de bebé adentro, sin tocar la línea -->
+  <g fill="#FAF6F0">
+    <ellipse cx="258" cy="300" rx="20" ry="26"/>
+    <circle cx="232" cy="256" r="8"/>
+    <circle cx="250" cy="244" r="8.5"/>
+    <circle cx="271" cy="241" r="8.5"/>
+    <circle cx="289" cy="250" r="8"/>
+  </g>
+</svg>
