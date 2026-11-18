@@ -179,6 +179,19 @@ function dibujar(contenedor, navegar) {
   botonComoInstalar.addEventListener("click", () => navegar("#/como-instalar"));
   pantalla.appendChild(botonComoInstalar);
 
+  // Solo para la cuenta de administradora: el chequeo real de verdad lo hace
+  // la Edge Function (esto es solo para no mostrar el link a cualquiera).
+  supabase.auth.getSession().then(({ data }) => {
+    if (data.session?.user?.email?.toLowerCase() === "marodb4@gmail.com") {
+      const botonAdmin = document.createElement("button");
+      botonAdmin.className = "boton boton-secundario";
+      botonAdmin.style.marginTop = "10px";
+      botonAdmin.textContent = "Administradora: ver clientas";
+      botonAdmin.addEventListener("click", () => navegar("#/admin"));
+      pantalla.insertBefore(botonAdmin, pantalla.querySelector(".aviso-legal") || null);
+    }
+  });
+
   const botonBorrar = document.createElement("button");
   botonBorrar.className = "boton boton-texto";
   botonBorrar.style.marginTop = "14px";

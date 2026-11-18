@@ -22,6 +22,7 @@ import * as nuevoRecordatorio from "./pantallas/nuevo-recordatorio.js";
 import * as misRecordatorios from "./pantallas/mis-recordatorios.js";
 import * as avisoAlAbrir from "./pantallas/aviso-al-abrir.js";
 import * as comoInstalar from "./pantallas/como-instalar.js";
+import * as admin from "./pantallas/admin.js";
 
 const CLAVE_BIENVENIDA_MOSTRADA = "dlp_bienvenida_mostrada";
 
@@ -134,6 +135,8 @@ function renderizar() {
         : inicioBebe.render(contenedorApp, { navegar });
       comoInstalar.renderSiempre(contenedorApp, { navegar });
       return;
+    case "admin":
+      return admin.render(contenedorApp, { navegar });
     case "proximamente":
       return proximamente.render(contenedorApp, { navegar, parametro });
     case "registro":
@@ -162,7 +165,9 @@ supabase.auth.onAuthStateChange(async (_evento, session) => {
     if (!descargaHecha) {
       descargaHecha = true;
       const datosDeLaNube = await descargarDesdeLaNube(session.user.id);
-      accesoActivo = Boolean(datosDeLaNube?.acceso_activo);
+      // La cuenta de administradora no tiene que pagarse a sí misma.
+      const esAdmin = session.user.email?.toLowerCase() === "marodb4@gmail.com";
+      accesoActivo = esAdmin || Boolean(datosDeLaNube?.acceso_activo);
     }
   } else {
     desactivarSincronizacion();
