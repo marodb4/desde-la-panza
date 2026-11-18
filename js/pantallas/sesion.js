@@ -72,13 +72,13 @@ function construirLoginOCrear(contenedor, navegar) {
     }, "password")
   );
 
-  if (modo === "crear") {
-    const avisoMail = document.createElement("p");
-    avisoMail.style.cssText = "font-size:13px; color: var(--color-texto-suave); margin-bottom:12px;";
-    avisoMail.textContent =
-      "Te va a llegar un mail para confirmar tu cuenta. Puede figurar como enviado por \"Supabase\" — es normal, es el mail de confirmación de Desde la Panza (revisá spam si no lo ves).";
-    bloque.appendChild(avisoMail);
-  }
+  const avisoMail = document.createElement("p");
+  avisoMail.style.cssText = "font-size:13px; color: var(--color-texto-suave); margin-bottom:12px;";
+  avisoMail.textContent =
+    modo === "crear"
+      ? "Te va a llegar un mail para confirmar tu cuenta. Puede figurar como enviado por \"Supabase\" — es normal, es el mail de confirmación de Desde la Panza (revisá spam si no lo ves)."
+      : "¿Te acabás de registrar? Primero tenés que confirmar el mail que te llegó (puede figurar como enviado por \"Supabase\" — revisá spam si no lo ves).";
+  bloque.appendChild(avisoMail);
 
   if (error) {
     const p = document.createElement("p");
@@ -268,6 +268,7 @@ async function mandarRecuperacion(contenedor, navegar) {
 
 function traducirError(errorSupabase) {
   const texto = errorSupabase.message || "";
+  if (texto.includes("Email not confirmed")) return "Todavía no confirmaste tu mail. Buscá el mail de confirmación (puede estar en spam) y tocá el link antes de entrar.";
   if (texto.includes("Invalid login credentials")) return "El mail o la contraseña no son correctos.";
   if (texto.includes("User already registered")) return "Ese mail ya tiene una cuenta. Iniciá sesión.";
   if (texto.includes("Password should be at least")) return "La contraseña tiene que tener al menos 6 caracteres.";
