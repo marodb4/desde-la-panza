@@ -172,6 +172,13 @@ function dibujar(contenedor, navegar) {
   botonGuardar.addEventListener("click", () => intentarGuardar(contenedor, navegar));
   pantalla.appendChild(botonGuardar);
 
+  const botonComoInstalar = document.createElement("button");
+  botonComoInstalar.className = "boton boton-secundario";
+  botonComoInstalar.style.marginTop = "14px";
+  botonComoInstalar.textContent = "¿Cómo instalo la app?";
+  botonComoInstalar.addEventListener("click", () => navegar("#/como-instalar"));
+  pantalla.appendChild(botonComoInstalar);
+
   const botonBorrar = document.createElement("button");
   botonBorrar.className = "boton boton-texto";
   botonBorrar.style.marginTop = "14px";

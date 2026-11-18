@@ -21,6 +21,7 @@ import * as listaControl from "./pantallas/lista-control.js";
 import * as nuevoRecordatorio from "./pantallas/nuevo-recordatorio.js";
 import * as misRecordatorios from "./pantallas/mis-recordatorios.js";
 import * as avisoAlAbrir from "./pantallas/aviso-al-abrir.js";
+import * as comoInstalar from "./pantallas/como-instalar.js";
 
 const CLAVE_BIENVENIDA_MOSTRADA = "dlp_bienvenida_mostrada";
 
@@ -91,8 +92,11 @@ function renderizar() {
       : inicioBebe.render(contenedorApp, { navegar });
     // ...y si hoy hay algo pendiente que todavía no se avisó, el aviso se
     // dibuja ENCIMA (como una hoja más), sin pisar lo que ya se dibujó.
+    // "Cómo instalar" solo se muestra si no hay un aviso más importante hoy.
     if (avisoAlAbrir.debeMostrarAvisoAlAbrir(perfil)) {
       avisoAlAbrir.render(contenedorApp, { navegar });
+    } else if (comoInstalar.debeMostrarComoInstalar()) {
+      comoInstalar.render(contenedorApp, { navegar });
     }
     return;
   }
@@ -122,6 +126,14 @@ function renderizar() {
       return nuevoRecordatorio.render(contenedorApp, { navegar });
     case "mis-recordatorios":
       return misRecordatorios.render(contenedorApp, { navegar });
+    case "como-instalar":
+      // Para poder abrirlo de nuevo a propósito (desde Editar datos), aunque
+      // ya se haya mostrado antes. Se dibuja sobre Inicio, como siempre.
+      perfil.etapa === "embarazo"
+        ? inicioEmbarazo.render(contenedorApp, { navegar })
+        : inicioBebe.render(contenedorApp, { navegar });
+      comoInstalar.renderSiempre(contenedorApp, { navegar });
+      return;
     case "proximamente":
       return proximamente.render(contenedorApp, { navegar, parametro });
     case "registro":
